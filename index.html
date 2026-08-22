@@ -137,6 +137,7 @@
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
 
         .artwork-card:hover {
@@ -195,6 +196,35 @@
             transform: scale(1);
         }
 
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 5;
+        }
+
+        .status-in-stock {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-sold {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .status-display {
+            background-color: #6d4aff;
+            color: white;
+        }
+
         .artwork-details {
             padding: 1rem;
         }
@@ -211,13 +241,6 @@
             font-style: italic;
             margin-bottom: 0.5rem;
             font-weight: 500;
-        }
-
-        .artwork-description {
-            font-size: 0.9rem;
-            color: #555;
-            margin: 0.5rem 0;
-            min-height: 3em;
         }
 
         .artwork-meta {
@@ -301,6 +324,15 @@
         .lightbox-info p {
             margin: 0.25rem 0;
             opacity: 0.9;
+        }
+
+        .lightbox-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .lightbox-close {
@@ -438,8 +470,8 @@
 </head>
 <body>
     <header>
-        <h1>Keegan Kaiser - Gallery</h1>
-        <p class="artist-banner">All works by <span id="collectionArtist">Keegan Kaiser</span></p>
+        <h1>🎨 Keegan Kaiser - Gallery</h1>
+        <p class="artist-banner">Contemporary Art Collection</p>
     </header>
 
     <div class="stats-bar">
@@ -448,12 +480,16 @@
             <div class="stat-label">Total Artworks</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value" id="totalYears">0</div>
-            <div class="stat-label">Years Spanned</div>
+            <div class="stat-value" id="inStockCount">0</div>
+            <div class="stat-label">Available</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value" id="avgYear">0</div>
-            <div class="stat-label">Average Year</div>
+            <div class="stat-value" id="soldCount">0</div>
+            <div class="stat-label">Sold</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="displayCount">0</div>
+            <div class="stat-label">On Display</div>
         </div>
     </div>
 
@@ -464,10 +500,11 @@
         </div>
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="painting">Paintings</button>
-            <button class="filter-btn" data-filter="sculpture">Sculptures</button>
+            <button class="filter-btn" data-filter="oil">Oil</button>
+            <button class="filter-btn" data-filter="acrylic">Acrylic</button>
+            <button class="filter-btn" data-filter="ink">Ink</button>
+            <button class="filter-btn" data-filter="marker">Marker</button>
             <button class="filter-btn" data-filter="digital">Digital</button>
-            <button class="filter-btn" data-filter="photography">Photography</button>
         </div>
     </div>
 
@@ -492,30 +529,80 @@
     <div id="toastContainer"></div>
 
     <footer>
-        <p>&copy; 2024 Art Collection Gallery. All rights reserved.</p>
+        <p>&copy; 2024 Keegan Kaiser Gallery. All rights reserved.</p>
         <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #aaa;">Click any artwork to view fullscreen</p>
     </footer>
 
     <script>
         // ==================== CONFIGURATION ====================
         const COLLECTION_CONFIG = {
-            artistName: "Keegan Kaiser"  // Single artist name
+            artistName: "Keegan Kaiser"
         };
 
+        // ==================== ARTWORK DATA FROM FILE ====================
+        const artworks = [
+            { id: 1, year: 2026, title: "Untitled (Graffiti)", dimensions: '20" x 20"', medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock" },
+            { id: 2, year: 2026, title: "asemic writing I", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 3, year: 2026, title: "ejection", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 4, year: 2026, title: "Graphic Score I", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 5, year: 2026, title: "abstract", dimensions: '', medium: "Mixed Media on Paper", status: "in-stock" },
+            { id: 6, year: 2026, title: "Untitled (Yellow)", dimensions: '24" x 36"', medium: "Oil on Canvas", status: "in-stock" },
+            { id: 7, year: 2026, title: "Untitled (Blue)", dimensions: '20" x 20"', medium: "Oil on Canvas", status: "in-stock" },
+            { id: 8, year: 2026, title: "Earth", dimensions: '', medium: "Oil on Canvas", status: "in-stock" },
+            { id: 9, year: 2026, title: "Untitled (?/...)", dimensions: '30" x 40"', medium: "Oil on Canvas", status: "sold" },
+            { id: 10, year: 2026, title: "Untitled (Tower)", dimensions: '', medium: "Oil on Canvas Board", status: "in-stock" },
+            { id: 11, year: 2026, title: "puzzle piece", dimensions: '', medium: "Pencil on Paper", status: "in-stock" },
+            { id: 12, year: 2025, title: "Untitled (Aether)", dimensions: '48" x 48"', medium: "Oil on Canvas", status: "in-stock" },
+            { id: 13, year: 2024, title: "Untitled (Dancer)", dimensions: '20" x 20"', medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock" },
+            { id: 14, year: 2024, title: "Untitled (KU)", dimensions: '8" x 10"', medium: "Acrylic on Canvas", status: "in-stock" },
+            { id: 15, year: 2024, title: "Rio", dimensions: '8" x 8"', medium: "Acrylic on Canvas", status: "in-stock" },
+            { id: 16, year: 2024, title: "water with boats", dimensions: '20" x 20"', medium: "Acrylic on Canvas", status: "in-stock" },
+            { id: 17, year: 2024, title: "Glacé", dimensions: '48" x 48"', medium: "Acrylic on Canvas", status: "in-stock" },
+            { id: 18, year: 2024, title: "Orbit", dimensions: '48" x 48"', medium: "Acrylic on Canvas", status: "display" },
+            { id: 19, year: 2024, title: "Halcyon", dimensions: '8" x 8"', medium: "Acrylic on Canvas", status: "sold" },
+            { id: 20, year: 2024, title: "Fervency", dimensions: '6" x 6"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 21, year: 2024, title: "Escape", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 22, year: 2024, title: "Untitled (Horizon)", dimensions: '9" x 11"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 23, year: 2024, title: "Garden", dimensions: '', medium: "Digital Photography", status: "in-stock" },
+            { id: 24, year: 2024, title: "Go Forth", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 25, year: 2024, title: "Untitled (Tree)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 26, year: 2024, title: "Untitled (Admiral)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 27, year: 2024, title: "Renewal//Mars", dimensions: '20" x 20"', medium: "Oil on Canvas", status: "in-stock" },
+            { id: 28, year: 2023, title: "Drift", dimensions: '11" x 14"', medium: "Acrylic on Canvas", status: "in-stock" },
+            { id: 29, year: 2023, title: "Choices", dimensions: '8" x 10"', medium: "Acrylic on Canvas", status: "in-stock" },
+            { id: 30, year: 2023, title: "Keen", dimensions: '11" x 14"', medium: "Acrylic on Canvas", status: "sold" },
+            { id: 31, year: 2023, title: "Lark", dimensions: '6" x 6"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 32, year: 2023, title: "Baggage", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 33, year: 2023, title: "Explore", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 34, year: 2023, title: "Territory", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 35, year: 2023, title: "Structure", dimensions: '6" x 6"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 36, year: 2023, title: "Depart", dimensions: '', medium: "Digital Photography", status: "in-stock" },
+            { id: 37, year: 2023, title: "Untitled (Worm)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 38, year: 2023, title: "Untitled (Bite)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 39, year: 2023, title: "Untitled (People)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 40, year: 2023, title: "Untitled (Vice)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 41, year: 2023, title: "Why? who cares?", dimensions: '', medium: "Permanent Marker on Paper", status: "in-stock" },
+            { id: 42, year: 2023, title: "Never Ending", dimensions: '', medium: "Permanent Marker on Paper", status: "in-stock" },
+            { id: 43, year: 2023, title: "Could It Be?", dimensions: '', medium: "Permanent Marker on Paper", status: "in-stock" },
+            { id: 44, year: 2023, title: "Untitled (Zentangle)", dimensions: '', medium: "Permanent Marker on Paper", status: "in-stock" },
+            { id: 45, year: 2019, title: "Veil", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 46, year: 2019, title: "Point", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
+            { id: 47, year: 2019, title: "Untitled (Moon)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 48, year: 2018, title: "Untitled (Smile)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 49, year: 2018, title: "Untitled (Beard)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 50, year: 2018, title: "Untitled (Dog)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 51, year: 2018, title: "Untitled (Haze)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 52, year: 2018, title: "Untitled (Hug)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 53, year: 2018, title: "Untitled (Hot)", dimensions: '', medium: "Ink on Paper", status: "in-stock" },
+            { id: 54, year: 2018, title: "Untitled (Cool)", dimensions: '', medium: "Ink on Paper", status: "in-stock" }
+        ];
+
         // ==================== STATE MANAGEMENT ====================
-        let artworks = [];
         let currentFilter = 'all';
         let currentLightboxIndex = 0;
 
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', () => {
-            // Set collection info
-            document.getElementById('collectionArtist').textContent = COLLECTION_CONFIG.artistName;
-            
-            loadFromStorage();
-            if (artworks.length === 0) {
-                initializeSampleData();
-            }
             renderArtworks();
             updateStats();
             
@@ -550,95 +637,6 @@
             });
         });
 
-        // ==================== DATA MANAGEMENT ====================
-        function initializeSampleData() {
-            artworks = [
-                {
-                    id: Date.now() + 1,
-                    title: "Sunset Dreams",
-                    year: 2023,
-                    medium: "Oil on canvas",
-                    dimensions: "24\" x 36\"",
-                    description: "A vibrant capture of golden hour over coastal waters.",
-                    imageUrl: "https://picsum.photos/seed/art1/800/600"
-                },
-                {
-                    id: Date.now() + 2,
-                    title: "Geometric Harmony",
-                    year: 2024,
-                    medium: "Acrylic on canvas",
-                    dimensions: "30\" x 40\"",
-                    description: "Bold geometric shapes exploring balance and tension.",
-                    imageUrl: "https://picsum.photos/seed/art2/800/600"
-                },
-                {
-                    id: Date.now() + 3,
-                    title: "Urban Solitude",
-                    year: 2023,
-                    medium: "Mixed media collage",
-                    dimensions: "18\" x 24\"",
-                    description: "City life viewed through fragmented perspectives.",
-                    imageUrl: "https://picsum.photos/seed/art3/800/600"
-                },
-                {
-                    id: Date.now() + 4,
-                    title: "Nature's Whisper",
-                    year: 2022,
-                    medium: "Watercolor",
-                    dimensions: "20\" x 28\"",
-                    description: "Delicate forest scene capturing morning mist.",
-                    imageUrl: "https://picsum.photos/seed/art4/800/600"
-                },
-                {
-                    id: Date.now() + 5,
-                    title: "Digital Dreamscape",
-                    year: 2024,
-                    medium: "Digital art",
-                    dimensions: "4K resolution",
-                    description: "AI-assisted exploration of surreal landscapes.",
-                    imageUrl: "https://picsum.photos/seed/art5/800/600"
-                },
-                {
-                    id: Date.now() + 6,
-                    title: "Marble Thoughts",
-                    year: 2021,
-                    medium: "Carved marble",
-                    dimensions: "48\" height",
-                    description: "Traditional sculpture technique meets modern form.",
-                    imageUrl: "https://picsum.photos/seed/art6/800/600"
-                }
-            ];
-            saveToStorage();
-        }
-
-        function saveToStorage() {
-            try {
-                localStorage.setItem('artCollection', JSON.stringify(artworks));
-            } catch (e) {
-                showToast('Failed to save data', 'error');
-            }
-        }
-
-        function loadFromStorage() {
-            try {
-                const saved = localStorage.getItem('artCollection');
-                if (saved) {
-                    artworks = JSON.parse(saved);
-                }
-            } catch (e) {
-                console.error('Error loading from storage:', e);
-            }
-        }
-
-        function resetCollection() {
-            artworks = [];
-            localStorage.removeItem('artCollection');
-            initializeSampleData();
-            renderArtworks();
-            updateStats();
-            showToast('Collection reset successfully', 'success');
-        }
-
         // ==================== RENDERING ====================
         function renderArtworks(filteredList = null) {
             const gallery = document.getElementById('artworkGallery');
@@ -655,10 +653,16 @@
                 return;
             }
             
-            gallery.innerHTML = list.map((artwork, index) => `
+            gallery.innerHTML = list.map((artwork, index) => {
+                const statusClass = `status-${artwork.status}`;
+                const statusLabel = artwork.status === 'in-stock' ? 'In Stock' : artwork.status === 'sold' ? 'Sold' : 'On Display';
+                const hash = artwork.id.toString().padStart(3, '0');
+                
+                return `
                 <article class="artwork-card" data-id="${artwork.id}">
+                    <div class="status-badge ${statusClass}">${statusLabel}</div>
                     <div class="artwork-image-container" onclick="openLightbox(${index})">
-                        <img src="${artwork.imageUrl || 'https://picsum.photos/seed/' + artwork.id}/800/600'}" 
+                        <img src="https://picsum.photos/seed/kaiser${hash}/800/600" 
                              alt="${artwork.title}" 
                              class="artwork-image"
                              loading="lazy">
@@ -669,7 +673,6 @@
                     <div class="artwork-details">
                         <h3 class="artwork-title">${artwork.title}</h3>
                         <p class="artwork-artist">${COLLECTION_CONFIG.artistName}</p>
-                        ${artwork.description ? `<p class="artwork-description">${truncate(artwork.description, 80)}</p>` : ''}
                         <div class="artwork-meta">
                             <span>${artwork.medium}</span>
                             <span>${artwork.year}</span>
@@ -681,11 +684,7 @@
                         ` : ''}
                     </div>
                 </article>
-            `).join('');
-        }
-
-        function truncate(str, length) {
-            return str.length > length ? str.slice(0, length) + '...' : str;
+            `}).join('');
         }
 
         // ==================== FILTERING & SEARCH ====================
@@ -697,8 +696,7 @@
                     !searchTerm || 
                     artwork.title.toLowerCase().includes(searchTerm) ||
                     String(artwork.year).includes(searchTerm) ||
-                    artwork.medium.toLowerCase().includes(searchTerm) ||
-                    (artwork.description && artwork.description.toLowerCase().includes(searchTerm));
+                    artwork.medium.toLowerCase().includes(searchTerm);
                 
                 const matchesFilter = 
                     currentFilter === 'all' ||
@@ -734,14 +732,26 @@
             const img = document.getElementById('lightboxImage');
             const info = document.getElementById('lightboxInfo');
             
-            img.src = artwork.imageUrl || `https://picsum.photos/seed/${artwork.id}/1200/900`;
+            const hash = artwork.id.toString().padStart(3, '0');
+            img.src = `https://picsum.photos/seed/kaiser${hash}/1200/900`;
             img.alt = artwork.title;
+            
+            const statusColors = {
+                'in-stock': '#28a745',
+                'sold': '#dc3545',
+                'display': '#6d4aff'
+            };
+            const statusLabels = {
+                'in-stock': 'In Stock',
+                'sold': 'Sold',
+                'display': 'On Display'
+            };
             
             info.innerHTML = `
                 <h3>${artwork.title}</h3>
                 <p><strong>${COLLECTION_CONFIG.artistName}</strong> • ${artwork.year}</p>
-                <p>${artwork.medium} | ${artwork.dimensions || ''}</p>
-                ${artwork.description ? `<p style="margin-top: 0.5rem; font-style: italic;">${artwork.description}</p>` : ''}
+                <p>${artwork.medium}${artwork.dimensions ? ` | ${artwork.dimensions}` : ''}</p>
+                <span class="lightbox-status" style="background-color: ${statusColors[artwork.status]}">${statusLabels[artwork.status]}</span>
             `;
             
             currentLightboxIndex = index;
@@ -765,12 +775,25 @@
                 const img = document.getElementById('lightboxImage');
                 const info = document.getElementById('lightboxInfo');
                 
-                img.src = artwork.imageUrl || `https://picsum.photos/seed/${artwork.id}/1200/900`;
+                const hash = artwork.id.toString().padStart(3, '0');
+                img.src = `https://picsum.photos/seed/kaiser${hash}/1200/900`;
+                
+                const statusColors = {
+                    'in-stock': '#28a745',
+                    'sold': '#dc3545',
+                    'display': '#6d4aff'
+                };
+                const statusLabels = {
+                    'in-stock': 'In Stock',
+                    'sold': 'Sold',
+                    'display': 'On Display'
+                };
+                
                 info.innerHTML = `
                     <h3>${artwork.title}</h3>
                     <p><strong>${COLLECTION_CONFIG.artistName}</strong> • ${artwork.year}</p>
-                    <p>${artwork.medium} | ${artwork.dimensions || ''}</p>
-                    ${artwork.description ? `<p style="margin-top: 0.5rem; font-style: italic;">${artwork.description}</p>` : ''}
+                    <p>${artwork.medium}${artwork.dimensions ? ` | ${artwork.dimensions}` : ''}</p>
+                    <span class="lightbox-status" style="background-color: ${statusColors[artwork.status]}">${statusLabels[artwork.status]}</span>
                 `;
             }
         }
@@ -778,13 +801,14 @@
         // ==================== STATISTICS ====================
         function updateStats() {
             const totalCount = artworks.length;
-            const years = artworks.map(a => a.year).filter(y => y);
-            const totalYears = years.length > 1 ? (Math.max(...years) - Math.min(...years) + 1) : (years.length || 0);
-            const avgYear = years.length > 0 ? Math.round(years.reduce((a, b) => a + b, 0) / years.length) : 0;
+            const inStockCount = artworks.filter(a => a.status === 'in-stock').length;
+            const soldCount = artworks.filter(a => a.status === 'sold').length;
+            const displayCount = artworks.filter(a => a.status === 'display').length;
             
             document.getElementById('totalCount').textContent = totalCount;
-            document.getElementById('totalYears').textContent = totalYears;
-            document.getElementById('avgYear').textContent = avgYear;
+            document.getElementById('inStockCount').textContent = inStockCount;
+            document.getElementById('soldCount').textContent = soldCount;
+            document.getElementById('displayCount').textContent = displayCount;
         }
 
         // ==================== TOAST NOTIFICATIONS ====================

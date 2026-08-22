@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Collection Gallery</title>
+    <title>Keegan Kaiser - Gallery</title>
     <style>
         * {
             margin: 0;
@@ -18,13 +18,11 @@
             line-height: 1.6;
         }
 
-        /* Header Styles */
         header {
-            background: linear-gradient(135deg, #6d4aff 0%, #4a3ab8 100%);
+            background-color: #6d4aff;
             color: white;
             padding: 2rem;
             text-align: center;
-            position: relative;
         }
 
         header h1 {
@@ -32,29 +30,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .artist-banner {
-            font-style: italic;
-            opacity: 0.9;
-        }
-
-        .admin-toggle {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .admin-toggle:hover {
-            background-color: rgba(255,255,255,0.3);
-        }
-
-        /* Controls Section */
         .controls {
             display: flex;
             justify-content: space-between;
@@ -69,29 +44,14 @@
         .search-bar {
             flex: 1;
             min-width: 250px;
-            position: relative;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            padding: 0.75rem 1rem;
             border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: #6d4aff;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.8rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
         }
 
         .filter-buttons {
@@ -102,12 +62,11 @@
 
         .filter-btn {
             padding: 0.5rem 1rem;
-            border: 2px solid transparent;
+            border: none;
             background-color: #e0e0e0;
             cursor: pointer;
             border-radius: 6px;
             transition: all 0.3s;
-            font-weight: 500;
         }
 
         .filter-btn:hover, .filter-btn.active {
@@ -115,32 +74,6 @@
             color: white;
         }
 
-        /* Statistics Bar */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 0.75rem 2rem;
-            background-color: #f8f8ff;
-            border-bottom: 1px solid #eee;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #6d4aff;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        /* Gallery Grid */
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -154,103 +87,18 @@
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
         }
 
         .artwork-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-        }
-
-        /* ENLARGED CLICKABLE PREVIEW AREA */
-        .artwork-image-container {
-            position: relative;
-            cursor: zoom-in;
-            overflow: hidden;
-            /* Make the entire card clickable via overlay */
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
 
         .artwork-image {
             width: 100%;
             height: 250px;
             object-fit: cover;
-            transition: transform 0.4s;
-            display: block;
-        }
-
-        .artwork-card:hover .artwork-image {
-            transform: scale(1.08);
-        }
-
-        /* Large overlay that covers the whole card for clicking */
-        .click-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(109, 74, 255, 0) 0%, rgba(109, 74, 255, 0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .artwork-image-container:hover .click-overlay {
-            opacity: 1;
-        }
-
-        .zoom-hint {
-            font-size: 2.5rem;
-            color: white;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            transform: scale(0.8);
-            transition: transform 0.3s;
-        }
-
-        .artwork-image-container:hover .zoom-hint {
-            transform: scale(1);
-        }
-
-        /* Admin Actions on Card */
-        .card-actions {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            display: flex;
-            gap: 0.25rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 10;
-        }
-
-        .artwork-card:hover .card-actions {
-            opacity: 1;
-        }
-
-        .action-btn {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .edit-btn {
-            background-color: #ffc107;
-            color: #333;
-        }
-
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
+            background-color: #eee;
         }
 
         .artwork-details {
@@ -262,1220 +110,6 @@
             font-weight: bold;
             margin-bottom: 0.5rem;
             color: #222;
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-        }
-
-        .artwork-id-badge {
-            font-size: 0.7rem;
-            color: #999;
-            background: #f0f0f0;
-            padding: 0.1rem 0.4rem;
-            border-radius: 3px;
-        }
-
-        .artwork-artist {
-            color: #6d4aff;
-            font-style: italic;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .artwork-description {
-            font-size: 0.9rem;
-            color: #555;
-            margin: 0.5rem 0;
-            min-height: 3em;
-        }
-
-        .artwork-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: #888;
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #eee;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background-color: #f0f0f0;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            color: #555;
-        }
-
-        /* Lightbox Modal - Full screen experience */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.95);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content {
-            max-width: 95%;
-            max-height: 95%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .lightbox-image-wrapper {
-            max-width: 100%;
-            max-height: 80vh;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-        }
-
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            display: block;
-        }
-
-        .lightbox-info {
-            margin-top: 1.5rem;
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 300px;
-            backdrop-filter: blur(10px);
-        }
-
-        .lightbox-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .lightbox-info p {
-            margin: 0.25rem 0;
-            opacity: 0.9;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s, opacity 0.3s;
-            background: none;
-            border: none;
-            padding: 0;
-            z-index: 1001;
-        }
-
-        .lightbox-close:hover {
-            transform: rotate(90deg);
-            opacity: 0.7;
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 4rem;
-            color: white;
-            cursor: pointer;
-            padding: 1rem 2rem;
-            transition: opacity 0.3s, transform 0.3s;
-            user-select: none;
-            z-index: 1001;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lightbox-nav:hover {
-            opacity: 1;
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .lightbox-prev {
-            left: 30px;
-        }
-
-        .lightbox-next {
-            right: 30px;
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-        }
-
-        .admin-panel.active {
-            display: flex;
-        }
-
-        .admin-modal {
-            background-color: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .admin-header {
-            background-color: #6d4aff;
-            color: white;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-header h2 {
-            font-size: 1.3rem;
-        }
-
-        .admin-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        .admin-body {
-            padding: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #444;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #6d4aff;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background-color: #6d4aff;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #5a3dd6;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-
-        /* Stats Modal */
-        .stats-modal {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .stat-card {
-            background-color: #f8f8ff;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-card-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #6d4aff;
-        }
-
-        .stat-card-label {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 0.25rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: #333;
-            color: white;
-            margin-top: 2rem;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #888;
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            z-index: 2000;
-            animation: slideIn 0.3s ease;
-        }
-
-        .toast.success {
-            background-color: #28a745;
-        }
-
-        .toast.error {
-            background-color: #dc3545;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                padding: 1rem;
-            }
-
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .lightbox-nav {
-                font-size: 3rem;
-                width: 60px;
-                height: 60px;
-            }
-
-            .lightbox-prev {
-                left: 10px;
-            }
-
-            .lightbox-next {
-                right: 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Keegan Kaiser - Gallery</h1>
-        <p class="artist-banner">All works by <span id="collectionArtist">[Single Artist]</span></p>
-        <button class="admin-toggle" onclick="toggleAdminPanel()">⚙️ Admin Mode</button>
-    </header>
-
-    <div class="stats-bar">
-        <div class="stat-item">
-            <div class="stat-value" id="totalCount">0</div>
-            <div class="stat-label">Total Artworks</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="totalYears">0</div>
-            <div class="stat-label">Years Spanned</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="avgYear">0</div>
-            <div class="stat-label">Average Year</div>
-        </div>
-    </div>
-
-    <div class="controls">
-        <div class="search-bar">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" placeholder="Search artworks by title, year, or medium...">
-        </div>
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="Painting">Paintings</button>
-            <button class="filter-btn" data-filter="Sculpture">Sculptures</button>
-            <button class="filter-btn" data-filter="Digital">Digital</button>
-            <button class="filter-btn" data-filter="Photography">Photography</button>
-        </div>
-    </div>
-
-    <main class="gallery" id="artworkGallery">
-        <!-- Artwork cards will be inserted here -->
-    </main>
-
-    <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-        <span class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</span>
-        <div class="lightbox-content">
-            <div class="lightbox-image-wrapper">
-                <img src="" alt="" class="lightbox-image" id="lightboxImage">
-            </div>
-            <div class="lightbox-info" id="lightboxInfo"></div>
-        </div>
-        <span class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</span>
-    </div>
-
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-modal">
-            <div class="admin-header">
-                <h2 id="adminTitle">Add New Artwork</h2>
-                <button class="admin-close" onclick="closeAdminPanel()">&times;</button>
-            </div>
-            <div class="admin-body">
-                <form id="artworkForm">
-                    <input type="hidden" id="artworkId">
-                    
-                    <div class="form-group">
-                        <label for="title">Title *</label>
-                        <input type="text" id="title" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="year">Year *</label>
-                            <input type="number" id="year" min="1800" max="2099" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="medium">Medium *</label>
-                            <input type="text" id="medium" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dimensions">Dimensions</label>
-                        <input type="text" id="dimensions" placeholder='e.g., 24" x 36"'>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" placeholder="Brief description of the artwork..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="imageUrl">Image URL</label>
-                        <input type="url" id="imageUrl" placeholder="https://example.com/image.jpg">
-                        <small style="color: #888; display: block; margin-top: 0.5rem;">Leave blank for random placeholder</small>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Artwork</button>
-                        <button type="button" class="btn btn-secondary" onclick="closeAdminPanel()">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="deleteBtn" style="display: none;" onclick="deleteCurrentArtwork()">Delete</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
-
-    <footer>
-        <p>&copy; 2026 Keegan Kaiser. All rights reserved.</p>
-        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #aaa;">Data stored locally in your browser</p>
-    </footer>
-
-    <script>
-        // ==================== CONFIGURATION ====================
-        const COLLECTION_CONFIG = {
-            artistName: "Keegan Kaiser",  // Single artist name
-            styleName: "Abstract"         // Single style name
-        };
-
-        // ==================== STATE MANAGEMENT ====================
-        let artworks = [];
-        let currentFilter = 'all';
-        let currentLightboxIndex = 0;
-        let isAdminMode = false;
-
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set collection info
-            document.getElementById('collectionArtist').textContent = COLLECTION_CONFIG.artistName;
-            
-            loadFromStorage();
-            if (artworks.length === 0) {
-                initializeSampleData();
-            }
-            renderArtworks();
-            updateStats();
-            
-            // Event listeners
-            document.getElementById('searchInput').addEventListener('input', debounce(filterArtworks, 300));
-            
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentFilter = e.target.dataset.filter;
-                    filterArtworks();
-                });
-            });
-            
-            document.getElementById('artworkForm').addEventListener('submit', handleFormSubmit);
-            
-            // Close modals on outside click
-            window.addEventListener('click', (e) => {
-                if (e.target.id === 'lightbox') closeLightbox();
-                if (e.target.id === 'adminPanel') closeAdminPanel();
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                    closeAdminPanel();
-                }
-                if (e.key === 'ArrowLeft' && document.getElementById('lightbox').classList.contains('active')) {
-                    navigateLightbox(-1);
-                }
-                if (e.key === 'ArrowRight' && document.getElementById('lightbox').classList.contains('active')) {
-                    navigateLightbox(1);
-                }
-            });
-        });
-
-        // ==================== DATA MANAGEMENT ====================
-        function initializeSampleData() {
-            artworks = [
-                {
-                    id: Date.now() + 1,
-                    title: "Sunset Dreams",
-                    year: 2023,
-                    medium: "Oil on canvas",
-                    dimensions: "24\" x 36\"",
-                    style: COLLECTION_CONFIG.styleName,
-                    description: "A vibrant capture of golden hour over coastal waters.",
-                    imageUrl: "https://picsum.photos/seed/art1/800/600"
-                },
-                {
-                    id: Date.now() + 2,
-                    title: "Geometric Harmony",
-                    year: 2024,
-                    medium: "Acrylic on canvas",
-                    dimensions: "30\" x 40\"",
-                    style: COLLECTION_CONFIG.styleName,
-                    description: "Bold geometric shapes exploring balance and tension.",
-                    imageUrl: "https://picsum.photos/seed/art2/800/600"
-                },
-                {
-                    id: Date.now() + 3,
-                    title: "Urban Solitude",
-                    year: 2023,
-                    medium: "Mixed media collage",
-                    dimensions: "18\" x 24\"",
-                    style: COLLECTION_CONFIG.styleName,
-                    description: "City life viewed through fragmented perspectives.",
-                    imageUrl: "https://picsum.photos/seed/art3/800/600"
-                },
-                {
-                    id: Date.now() + 4,
-                    title: "Nature's Whisper",
-                    year: 2022,
-                    medium: "Watercolor",
-                    dimensions: "20\" x 28\"",
-                    style: COLLECTION_CONFIG.styleName,
-                    description: "Delicate forest scene capturing morning mist.",
-                    imageUrl: "https://picsum.photos/seed/art4/800/600"
-                },
-                {
-                    id: Date.now() + 5,
-                    title: "Digital Dreamscape",
-                    year: 2024,
-                    medium: "Digital art",
-                    dimensions: "4K resolution",
-                    style: COLLECTION_CONFIG.styleName,
-                    description: "AI-assisted exploration of surreal landscapes.",
-                    imageUrl: "https://picsum.photos/seed/art5/800/600"
-                },
-                {
-                    id: Date.now() + 6,
-                    title: "Marble Thoughts",
-                    year: 2021,
-                    medium: "Carved marble",
-                    dimensions: "48\" height",
-                    style: COLLECTION_CONFIG.styleName,
-                    description: "Traditional sculpture technique meets modern form.",
-                    imageUrl: "https://picsum.photos/seed/art6/800/600"
-                }
-            ];
-            saveToStorage();
-        }
-
-        function saveToStorage() {
-            try {
-                localStorage.setItem('artCollection', JSON.stringify(artworks));
-            } catch (e) {
-                showToast('Failed to save data', 'error');
-            }
-        }
-
-        function loadFromStorage() {
-            try {
-                const saved = localStorage.getItem('artCollection');
-                if (saved) {
-                    artworks = JSON.parse(saved);
-                }
-            } catch (e) {
-                console.error('Error loading from storage:', e);
-            }
-        }
-
-        function resetCollection() {
-            if (confirm('Are you sure? This will delete all artworks and restore sample data.')) {
-                artworks = [];
-                localStorage.removeItem('artCollection');
-                initializeSampleData();
-                renderArtworks();
-                updateStats();
-                closeAdminPanel();
-                showToast('Collection reset successfully', 'success');
-            }
-        }
-
-        // ==================== RENDERING ====================
-        function renderArtworks(filteredList = null) {
-            const gallery = document.getElementById('artworkGallery');
-            const list = filteredList || getFilteredArtworks();
-            
-            if (list.length === 0) {
-                gallery.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1/-1;">
-                        <div class="empty-state-icon">🎨</div>
-                        <h3>No artworks found</h3>
-                        <p>Try adjusting your filters or add new artworks.</p>
-                        ${!isAdminMode ? '<button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleAdminPanel()">Add Your First Artwork</button>' : ''}
-                    </div>
-                `;
-                return;
-            }
-            
-            gallery.innerHTML = list.map((artwork, index) => `
-                <article class="artwork-card" data-id="${artwork.id}">
-                    <div class="artwork-image-container" onclick="openLightbox(${index})">
-                        <img src="${artwork.imageUrl || 'https://picsum.photos/seed/' + artwork.id}/800/600'}" 
-                             alt="${artwork.title}" 
-                             class="artwork-image"
-                             loading="lazy">
-                        <div class="click-overlay">
-                            <span class="zoom-hint">🔍</span>
-                        </div>
-                        ${isAdminMode ? `
-                            <div class="card-actions">
-                                <button class="action-btn edit-btn" onclick="event.stopPropagation(); editArtwork(${artwork.id})" title="Edit">✏️</button>
-                                <button class="action-btn delete-btn" onclick="event.stopPropagation(); confirmDelete(${artwork.id})" title="Delete">🗑️</button>
-                            </div>
-                        ` : ''}
-                    </div>
-                    <div class="artwork-details">
-                        <div class="artwork-title">
-                            ${artwork.title}
-                            <span class="artwork-id-badge">#${artwork.id.toString().slice(-4)}</span>
-                        </div>
-                        <p class="artwork-artist">${COLLECTION_CONFIG.artistName}</p>
-                        ${artwork.description ? `<p class="artwork-description">${truncate(artwork.description, 80)}</p>` : ''}
-                        <div class="artwork-meta">
-                            <span>${artwork.medium}</span>
-                            <span>${artwork.year}</span>
-                        </div>
-                        <div class="tags">
-                            <span class="tag">${artwork.dimensions || 'N/A'}</span>
-                        </div>
-                    </div>
-                </article>
-            `).join('');
-            
-            // Update lightbox dataset
-            currentLightboxIndex = 0;
-        }
-
-        function truncate(str, length) {
-            return str.length > length ? str.slice(0, length) + '...' : str;
-        }
-
-        // ==================== FILTERING & SEARCH ====================
-        function getFilteredArtworks() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            return artworks.filter(artwork => {
-                const matchesSearch = 
-                    !searchTerm || 
-                    artwork.title.toLowerCase().includes(searchTerm) ||
-                    String(artwork.year).includes(searchTerm) ||
-                    artwork.medium.toLowerCase().includes(searchTerm) ||
-                    (artwork.description && artwork.description.toLowerCase().includes(searchTerm));
-                
-                const matchesFilter = 
-                    currentFilter === 'all' ||
-                    artwork.medium.toLowerCase().includes(currentFilter.toLowerCase()) ||
-                    artwork.style.toLowerCase().includes(currentFilter.toLowerCase());
-                
-                return matchesSearch && matchesFilter;
-            });
-        }
-
-        function filterArtworks() {
-            renderArtworks(getFilteredArtworks());
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // ==================== LIGHTBOX ====================
-        function openLightbox(index) {
-            const filtered = getFilteredArtworks();
-            if (!filtered[index]) return;
-            
-            const artwork = filtered[index];
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightboxImage');
-            const info = document.getElementById('lightboxInfo');
-            
-            img.src = artwork.imageUrl || `https://picsum.photos/seed/${artwork.id}/1200/900`;
-            img.alt = artwork.title;
-            
-            info.innerHTML = `
-                <h3>${artwork.title}</h3>
-                <p><strong>${COLLECTION_CONFIG.artistName}</strong> • ${artwork.year}</p>
-                <p>${artwork.medium} | ${artwork.dimensions || ''}</p>
-                ${artwork.description ? `<p style="margin-top: 0.5rem; font-style: italic;">${artwork.description}</p>` : ''}
-            `;
-            
-            currentLightboxIndex = index;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = '';
-            document.getElementById('lightboxImage').src = '';
-        }
-
-        function navigateLightbox(direction) {
-            const filtered = getFilteredArtworks();
-            const newIndex = currentLightboxIndex + direction;
-            
-            if (newIndex >= 0 && newIndex < filtered.length) {
-                currentLightboxIndex = newIndex;
-                const artwork = filtered[currentLightboxIndex];
-                const img = document.getElementById('lightboxImage');
-                const info = document.getElementById('lightboxInfo');
-                
-                img.src = artwork.imageUrl || `https://picsum.photos/seed/${artwork.id}/1200/900`;
-                info.innerHTML = `
-                    <h3>${artwork.title}</h3>
-                    <p><strong>${COLLECTION_CONFIG.artistName}</strong> • ${artwork.year}</p>
-                    <p>${artwork.medium} | ${artwork.dimensions || ''}</p>
-                    ${artwork.description ? `<p style="margin-top: 0.5rem; font-style: italic;">${artwork.description}</p>` : ''}
-                `;
-            }
-        }
-
-        // ==================== ADMIN FUNCTIONS ====================
-        function toggleAdminPanel() {
-            isAdminMode = !isAdminMode;
-            document.getElementById('adminPanel').classList.add('active');
-            resetForm();
-            renderArtworks();
-            updateStats();
-        }
-
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').classList.remove('active');
-            isAdminMode = false;
-            renderArtworks();
-        }
-
-        function resetForm() {
-            document.getElementById('artworkForm').reset();
-            document.getElementById('artworkId').value = '';
-            document.getElementById('adminTitle').textContent = 'Add New Artwork';
-            document.getElementById('deleteBtn').style.display = 'none';
-        }
-
-        function editArtwork(id) {
-            const artwork = artworks.find(a => a.id === id);
-            if (!artwork) return;
-            
-            document.getElementById('artworkId').value = artwork.id;
-            document.getElementById('title').value = artwork.title;
-            document.getElementById('year').value = artwork.year;
-            document.getElementById('medium').value = artwork.medium;
-            document.getElementById('dimensions').value = artwork.dimensions || '';
-            document.getElementById('description').value = artwork.description || '';
-            document.getElementById('imageUrl').value = artwork.imageUrl || '';
-            
-            document.getElementById('adminTitle').textContent = 'Edit Artwork';
-            document.getElementById('deleteBtn').style.display = 'inline-block';
-            document.getElementById('adminPanel').classList.add('active');
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const id = document.getElementById('artworkId').value;
-            const artworkData = {
-                title: document.getElementById('title').value.trim(),
-                year: parseInt(document.getElementById('year').value),
-                medium: document.getElementById('medium').value.trim(),
-                dimensions: document.getElementById('dimensions').value.trim(),
-                style: COLLECTION_CONFIG.styleName,
-                description: document.getElementById('description').value.trim(),
-                imageUrl: document.getElementById('imageUrl').value.trim() || undefined
-            };
-            
-            if (id) {
-                // Update existing
-                const index = artworks.findIndex(a => a.id == id);
-                if (index !== -1) {
-                    artworks[index] = { ...artworks[index], ...artworkData };
-                    showToast('Artwork updated successfully', 'success');
-                }
-            } else {
-                // Add new
-                const newArtwork = {
-                    id: Date.now(),
-                    ...artworkData
-                };
-                artworks.push(newArtwork);
-                showToast('Artwork added successfully', 'success');
-            }
-            
-            saveToStorage();
-            closeAdminPanel();
-            renderArtworks();
-            updateStats();
-        }
-
-        function confirmDelete(id) {
-            if (confirm('Are you sure you want to delete this artwork? This action cannot be undone.')) {
-                deleteArtwork(id);
-            }
-        }
-
-        function deleteCurrentArtwork() {
-            const id = document.getElementById('artworkId').value;
-            if (id) {
-                confirmDelete(parseInt(id));
-                closeAdminPanel();
-            }
-        }
-
-        function deleteArtwork(id) {
-            artworks = artworks.filter(a => a.id !== id);
-            saveToStorage();
-            renderArtworks();
-            updateStats();
-            showToast('Artwork deleted successfully', 'success');
-        }
-
-        // ==================== STATISTICS ====================
-        function updateStats() {
-            const totalCount = artworks.length;
-            const years = artworks.map(a => a.year).filter(y => y);
-            const totalYears = years.length > 1 ? (Math.max(...years) - Math.min(...years) + 1) : (years.length || 0);
-            const avgYear = years.length > 0 ? Math.round(years.reduce((a, b) => a + b, 0) / years.length) : 0;
-            
-            document.getElementById('totalCount').textContent = totalCount;
-            document.getElementById('totalYears').textContent = totalYears;
-            document.getElementById('avgYear').textContent = avgYear;
-        }
-
-        // ==================== TOAST NOTIFICATIONS ====================
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.getElementById('toastContainer').appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Collection Gallery</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #6d4aff 0%, #4a3ab8 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .admin-toggle {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .admin-toggle:hover {
-            background-color: rgba(255,255,255,0.3);
-        }
-
-        /* Controls Section */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .search-bar {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: #6d4aff;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.8rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid transparent;
-            background-color: #e0e0e0;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background-color: #6d4aff;
-            color: white;
-        }
-
-        /* Statistics Bar */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 0.75rem 2rem;
-            background-color: #f8f8ff;
-            border-bottom: 1px solid #eee;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #6d4aff;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        /* Gallery Grid */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
-        }
-
-        .artwork-card {
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-        }
-
-        .artwork-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-        }
-
-        .artwork-image-container {
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-        }
-
-        .artwork-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .artwork-card:hover .artwork-image {
-            transform: scale(1.05);
-        }
-
-        .view-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(109, 74, 255, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            color: white;
-            font-size: 3rem;
-        }
-
-        .artwork-image-container:hover .view-overlay {
-            opacity: 1;
-        }
-
-        /* Admin Actions on Card */
-        .card-actions {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            display: flex;
-            gap: 0.25rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .artwork-card:hover .card-actions {
-            opacity: 1;
-        }
-
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .edit-btn {
-            background-color: #ffc107;
-            color: #333;
-        }
-
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .artwork-details {
-            padding: 1rem;
-        }
-
-        .artwork-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #222;
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-        }
-
-        .artwork-id-badge {
-            font-size: 0.7rem;
-            color: #999;
-            background: #f0f0f0;
-            padding: 0.1rem 0.4rem;
-            border-radius: 3px;
         }
 
         .artwork-artist {
@@ -1484,22 +118,12 @@
             margin-bottom: 0.5rem;
         }
 
-        .artwork-description {
-            font-size: 0.9rem;
-            color: #555;
-            margin: 0.5rem 0;
-            min-height: 3em;
-        }
-
         .artwork-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            font-size: 0.85rem;
+            justify-content: space-between;
+            font-size: 0.9rem;
             color: #888;
             margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid #eee;
         }
 
         .tag {
@@ -1508,263 +132,10 @@
             background-color: #f0f0f0;
             border-radius: 4px;
             font-size: 0.8rem;
-            color: #555;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
         }
 
-        /* Lightbox Modal */
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.9);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 85vh;
-            border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        .lightbox-info {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0,0,0,0.7);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 300px;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .lightbox-close:hover {
-            transform: rotate(90deg);
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 3rem;
-            color: white;
-            cursor: pointer;
-            padding: 1rem;
-            transition: opacity 0.3s;
-        }
-
-        .lightbox-nav:hover {
-            opacity: 0.7;
-        }
-
-        .lightbox-prev {
-            left: 20px;
-        }
-
-        .lightbox-next {
-            right: 20px;
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-        }
-
-        .admin-panel.active {
-            display: flex;
-        }
-
-        .admin-modal {
-            background-color: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .admin-header {
-            background-color: #6d4aff;
-            color: white;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-header h2 {
-            font-size: 1.3rem;
-        }
-
-        .admin-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        .admin-body {
-            padding: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #444;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #6d4aff;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background-color: #6d4aff;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #5a3dd6;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-
-        /* Stats Modal */
-        .stats-modal {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .stat-card {
-            background-color: #f8f8ff;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-card-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #6d4aff;
-        }
-
-        .stat-card-label {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 0.25rem;
-        }
-
-        /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
@@ -1773,51 +144,6 @@
             margin-top: 2rem;
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #888;
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #333;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            z-index: 2000;
-            animation: slideIn 0.3s ease;
-        }
-
-        .toast.success {
-            background-color: #28a745;
-        }
-
-        .toast.error {
-            background-color: #dc3545;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .gallery {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1827,57 +153,23 @@
             header h1 {
                 font-size: 1.8rem;
             }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .lightbox-nav {
-                font-size: 2rem;
-                padding: 0.5rem;
-            }
-
-            .lightbox-prev {
-                left: 10px;
-            }
-
-            .lightbox-next {
-                right: 10px;
-            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>🎨 Art Collection Gallery</h1>
-        <p>Browse and manage your curated artworks</p>
-        <button class="admin-toggle" onclick="toggleAdminPanel()">⚙️ Admin Mode</button>
+        <h1>Keegan Kaiser - Gallery</h1>
+        <p>Browse curated artworks</p>
     </header>
-
-    <div class="stats-bar">
-        <div class="stat-item">
-            <div class="stat-value" id="totalCount">0</div>
-            <div class="stat-label">Total Artworks</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="uniqueArtists">0</div>
-            <div class="stat-label">Artists</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value" id="totalYears">0</div>
-            <div class="stat-label">Years Spanned</div>
-        </div>
-    </div>
 
     <div class="controls">
         <div class="search-bar">
-            <span class="search-icon">🔍</span>
             <input type="text" id="searchInput" placeholder="Search artworks, artists, or styles...">
         </div>
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="painting">Painting</button>
-            <button class="filter-btn" data-filter="sculpture">Sculpture</button>
+            <button class="filter-btn" data-filter="drawing">Drawing</button>
             <button class="filter-btn" data-filter="digital">Digital</button>
             <button class="filter-btn" data-filter="photography">Photography</button>
         </div>
@@ -1887,571 +179,121 @@
         <!-- Artwork cards will be inserted here -->
     </main>
 
-    <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-        <span class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</span>
-        <div class="lightbox-content">
-            <img src="" alt="" class="lightbox-image" id="lightboxImage">
-            <div class="lightbox-info" id="lightboxInfo"></div>
-        </div>
-        <span class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</span>
-    </div>
-
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-modal">
-            <div class="admin-header">
-                <h2 id="adminTitle">Add New Artwork</h2>
-                <button class="admin-close" onclick="closeAdminPanel()">&times;</button>
-            </div>
-            <div class="admin-body">
-                <form id="artworkForm">
-                    <input type="hidden" id="artworkId">
-                    
-                    <div class="form-group">
-                        <label for="title">Title *</label>
-                        <input type="text" id="title" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="artist">Artist *</label>
-                        <input type="text" id="artist" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="year">Year *</label>
-                            <input type="number" id="year" min="1800" max="2099" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="medium">Medium *</label>
-                            <input type="text" id="medium" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="dimensions">Dimensions</label>
-                            <input type="text" id="dimensions" placeholder='e.g., 24" x 36"'>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="style">Style</label>
-                            <select id="style">
-                                <option value="">Select...</option>
-                                <option value="Abstract">Abstract</option>
-                                <option value="Realism">Realism</option>
-                                <option value="Impressionism">Impressionism</option>
-                                <option value="Contemporary">Contemporary</option>
-                                <option value="Classical">Classical</option>
-                                <option value="Digital">Digital</option>
-                                <option value="Surrealism">Surrealism</option>
-                                <option value="Modern">Modern</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" placeholder="Brief description of the artwork..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="imageUrl">Image URL</label>
-                        <input type="url" id="imageUrl" placeholder="https://example.com/image.jpg">
-                        <small style="color: #888; display: block; margin-top: 0.5rem;">Leave blank for random placeholder</small>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save Artwork</button>
-                        <button type="button" class="btn btn-secondary" onclick="closeAdminPanel()">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="deleteBtn" style="display: none;" onclick="deleteCurrentArtwork()">Delete</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Stats Modal -->
-    <div class="admin-panel" id="statsModal">
-        <div class="admin-modal">
-            <div class="admin-header">
-                <h2>Collection Statistics</h2>
-                <button class="admin-close" onclick="document.getElementById('statsModal').classList.remove('active')">&times;</button>
-            </div>
-            <div class="admin-body">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-number" id="statTotal">0</div>
-                        <div class="stat-card-label">Total Artworks</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-number" id="statArtists">0</div>
-                        <div class="stat-card-label">Unique Artists</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-number" id="statPaintings">0</div>
-                        <div class="stat-card-label">Paintings</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-number" id="statDigital">0</div>
-                        <div class="stat-card-label">Digital Works</div>
-                    </div>
-                </div>
-                <div class="form-actions" style="margin-top: 1.5rem;">
-                    <button class="btn btn-danger" onclick="resetCollection()">Reset Collection</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
-
     <footer>
-        <p>&copy; 2024 Art Collection Gallery. All rights reserved.</p>
-        <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #aaa;">Data stored locally in your browser</p>
+        <p>&copy; 2026 Keegan Kaiser. All rights reserved.</p>
     </footer>
 
     <script>
-        // ==================== STATE MANAGEMENT ====================
-        let artworks = [];
+        // Sample artwork data - replace with your actual collection
+        const artworks = [
+            {
+                id: 1,
+                title: "Sunset Dreams",
+                artist: "Maria Chen",
+                year: 2023,
+                medium: "Oil on canvas",
+                dimensions: "24\" x 36\"",
+                image: "https://picsum.photos/seed/art1/400/300"
+            },
+            {
+                id: 2,
+                title: "Geometric Harmony",
+                artist: "Alex Rivera",
+                year: 2024,
+                medium: "Acrylic",
+                dimensions: "30\" x 40\"",
+                image: "https://picsum.photos/seed/art2/400/300"
+            },
+            {
+                id: 3,
+                title: "Urban Solitude",
+                artist: "Jordan Kim",
+                year: 2023,
+                medium: "Mixed media",
+                dimensions: "18\" x 24\"",
+                image: "https://picsum.photos/seed/art3/400/300"
+            },
+            {
+                id: 4,
+                title: "Nature's Whisper",
+                artist: "Sam Patel",
+                year: 2022,
+                medium: "Watercolor",
+                dimensions: "20\" x 28\"",
+                image: "https://picsum.photos/seed/art4/400/300"
+            },
+            {
+                id: 5,
+                title: "Digital Dreamscape",
+                artist: "Taylor Brooks",
+                year: 2024,
+                medium: "Digital art",
+                dimensions: "4K resolution",
+                image: "https://picsum.photos/seed/art5/400/300"
+            },
+            {
+                id: 6,
+                title: "Marble Thoughts",
+                artist: "Casey Morgan",
+                year: 2021,
+                medium: "Stone sculpture",
+                dimensions: "48\" height",
+                image: "https://picsum.photos/seed/art6/400/300"
+            }
+        ];
+
+        const gallery = document.getElementById('artworkGallery');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
         let currentFilter = 'all';
-        let currentLightboxIndex = 0;
-        let isAdminMode = false;
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            loadFromStorage();
-            if (artworks.length === 0) {
-                initializeSampleData();
-            }
-            renderArtworks();
-            updateStats();
-            
-            // Event listeners
-            document.getElementById('searchInput').addEventListener('input', debounce(filterArtworks, 300));
-            
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentFilter = e.target.dataset.filter;
-                    filterArtworks();
-                });
-            });
-            
-            document.getElementById('artworkForm').addEventListener('submit', handleFormSubmit);
-            
-            // Close modals on outside click
-            window.addEventListener('click', (e) => {
-                if (e.target.id === 'lightbox') closeLightbox();
-                if (e.target.id === 'adminPanel') closeAdminPanel();
-                if (e.target.id === 'statsModal') document.getElementById('statsModal').classList.remove('active');
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                    closeAdminPanel();
-                }
-                if (e.key === 'ArrowLeft' && document.getElementById('lightbox').classList.contains('active')) {
-                    navigateLightbox(-1);
-                }
-                if (e.key === 'ArrowRight' && document.getElementById('lightbox').classList.contains('active')) {
-                    navigateLightbox(1);
-                }
-            });
-        });
-
-        // ==================== DATA MANAGEMENT ====================
-        function initializeSampleData() {
-            artworks = [
-                {
-                    id: Date.now() + 1,
-                    title: "Sunset Dreams",
-                    artist: "Maria Chen",
-                    year: 2023,
-                    medium: "Oil on canvas",
-                    dimensions: "24\" x 36\"",
-                    style: "Impressionism",
-                    description: "A vibrant capture of golden hour over coastal waters.",
-                    imageUrl: "https://picsum.photos/seed/art1/600/450"
-                },
-                {
-                    id: Date.now() + 2,
-                    title: "Geometric Harmony",
-                    artist: "Alex Rivera",
-                    year: 2024,
-                    medium: "Acrylic on canvas",
-                    dimensions: "30\" x 40\"",
-                    style: "Abstract",
-                    description: "Bold geometric shapes exploring balance and tension.",
-                    imageUrl: "https://picsum.photos/seed/art2/600/450"
-                },
-                {
-                    id: Date.now() + 3,
-                    title: "Urban Solitude",
-                    artist: "Jordan Kim",
-                    year: 2023,
-                    medium: "Mixed media collage",
-                    dimensions: "18\" x 24\"",
-                    style: "Contemporary",
-                    description: "City life viewed through fragmented perspectives.",
-                    imageUrl: "https://picsum.photos/seed/art3/600/450"
-                },
-                {
-                    id: Date.now() + 4,
-                    title: "Nature's Whisper",
-                    artist: "Sam Patel",
-                    year: 2022,
-                    medium: "Watercolor",
-                    dimensions: "20\" x 28\"",
-                    style: "Realism",
-                    description: "Delicate forest scene capturing morning mist.",
-                    imageUrl: "https://picsum.photos/seed/art4/600/450"
-                },
-                {
-                    id: Date.now() + 5,
-                    title: "Digital Dreamscape",
-                    artist: "Taylor Brooks",
-                    year: 2024,
-                    medium: "Digital art",
-                    dimensions: "4K resolution",
-                    style: "Digital",
-                    description: "AI-assisted exploration of surreal landscapes.",
-                    imageUrl: "https://picsum.photos/seed/art5/600/450"
-                },
-                {
-                    id: Date.now() + 6,
-                    title: "Marble Thoughts",
-                    artist: "Casey Morgan",
-                    year: 2021,
-                    medium: "Carved marble",
-                    dimensions: "48\" height",
-                    style: "Classical",
-                    description: "Traditional sculpture technique meets modern form.",
-                    imageUrl: "https://picsum.photos/seed/art6/600/450"
-                }
-            ];
-            saveToStorage();
-        }
-
-        function saveToStorage() {
-            try {
-                localStorage.setItem('artCollection', JSON.stringify(artworks));
-            } catch (e) {
-                showToast('Failed to save data', 'error');
-            }
-        }
-
-        function loadFromStorage() {
-            try {
-                const saved = localStorage.getItem('artCollection');
-                if (saved) {
-                    artworks = JSON.parse(saved);
-                }
-            } catch (e) {
-                console.error('Error loading from storage:', e);
-            }
-        }
-
-        function resetCollection() {
-            if (confirm('Are you sure? This will delete all artworks and restore sample data.')) {
-                artworks = [];
-                localStorage.removeItem('artCollection');
-                initializeSampleData();
-                renderArtworks();
-                updateStats();
-                closeAdminPanel();
-                showToast('Collection reset successfully', 'success');
-            }
-        }
-
-        // ==================== RENDERING ====================
-        function renderArtworks(filteredList = null) {
-            const gallery = document.getElementById('artworkGallery');
-            const list = filteredList || getFilteredArtworks();
-            
-            if (list.length === 0) {
-                gallery.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1/-1;">
-                        <div class="empty-state-icon">🎨</div>
-                        <h3>No artworks found</h3>
-                        <p>Try adjusting your filters or add new artworks.</p>
-                        ${!isAdminMode ? '<button class="btn btn-primary" style="margin-top: 1rem;" onclick="toggleAdminPanel()">Add Your First Artwork</button>' : ''}
-                    </div>
-                `;
-                return;
-            }
-            
-            gallery.innerHTML = list.map((artwork, index) => `
-                <article class="artwork-card" data-id="${artwork.id}">
-                    <div class="artwork-image-container" onclick="openLightbox(${list.indexOf(artwork)})">
-                        <img src="${artwork.imageUrl || 'https://picsum.photos/seed/' + artwork.id}/400/300'}" 
-                             alt="${artwork.title}" 
-                             class="artwork-image"
-                             loading="lazy">
-                        <div class="view-overlay">🔍</div>
-                        ${isAdminMode ? `
-                            <div class="card-actions">
-                                <button class="action-btn edit-btn" onclick="event.stopPropagation(); editArtwork(${artwork.id})" title="Edit">✏️</button>
-                                <button class="action-btn delete-btn" onclick="event.stopPropagation(); confirmDelete(${artwork.id})" title="Delete">🗑️</button>
-                            </div>
-                        ` : ''}
-                    </div>
+        function renderArtworks(filteredList) {
+            gallery.innerHTML = filteredList.map(artwork => `
+                <article class="artwork-card">
+                    <img src="${artwork.image}" alt="${artwork.title}" class="artwork-image">
                     <div class="artwork-details">
-                        <div class="artwork-title">
-                            ${artwork.title}
-                            <span class="artwork-id-badge">#${artwork.id.toString().slice(-4)}</span>
-                        </div>
-                        <p class="artwork-artist">by ${artwork.artist}</p>
-                        ${artwork.description ? `<p class="artwork-description">${truncate(artwork.description, 60)}</p>` : ''}
+                        <h3 class="artwork-title">${artwork.title}</h3>
                         <div class="artwork-meta">
                             <span>${artwork.medium}</span>
                             <span>${artwork.year}</span>
                         </div>
                         <div class="tags">
-                            <span class="tag">${artwork.style || 'N/A'}</span>
-                            <span class="tag">${artwork.dimensions || 'N/A'}</span>
+                            <span class="tag">${artwork.dimensions}</span>
                         </div>
                     </div>
                 </article>
             `).join('');
-            
-            // Update lightbox dataset
-            currentLightboxIndex = 0;
-        }
-
-        function truncate(str, length) {
-            return str.length > length ? str.slice(0, length) + '...' : str;
-        }
-
-        // ==================== FILTERING & SEARCH ====================
-        function getFilteredArtworks() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            return artworks.filter(artwork => {
-                const matchesSearch = 
-                    !searchTerm || 
-                    artwork.title.toLowerCase().includes(searchTerm) ||
-                    artwork.artist.toLowerCase().includes(searchTerm) ||
-                    artwork.style.toLowerCase().includes(searchTerm) ||
-                    artwork.medium.toLowerCase().includes(searchTerm);
-                
-                const matchesFilter = 
-                    currentFilter === 'all' ||
-                    artwork.medium.toLowerCase().includes(currentFilter) ||
-                    artwork.style.toLowerCase().includes(currentFilter);
-                
-                return matchesSearch && matchesFilter;
-            });
         }
 
         function filterArtworks() {
-            renderArtworks(getFilteredArtworks());
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // ==================== LIGHTBOX ====================
-        function openLightbox(index) {
-            const filtered = getFilteredArtworks();
-            if (!filtered[index]) return;
+            const searchTerm = searchInput.value.toLowerCase();
+            let filtered = artworks.filter(artwork => 
+                artwork.title.toLowerCase().includes(searchTerm) ||
+            );
             
-            const artwork = filtered[index];
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightboxImage');
-            const info = document.getElementById('lightboxInfo');
-            
-            img.src = artwork.imageUrl || `https://picsum.photos/seed/${artwork.id}/800/600`;
-            img.alt = artwork.title;
-            
-            info.innerHTML = `
-                <strong>${artwork.title}</strong><br>
-                by ${artwork.artist} • ${artwork.year}<br>
-                ${artwork.medium} | ${artwork.style || 'N/A'}
-            `;
-            
-            currentLightboxIndex = index;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = '';
-            document.getElementById('lightboxImage').src = '';
-        }
-
-        function navigateLightbox(direction) {
-            const filtered = getFilteredArtworks();
-            const newIndex = currentLightboxIndex + direction;
-            
-            if (newIndex >= 0 && newIndex < filtered.length) {
-                currentLightboxIndex = newIndex;
-                const artwork = filtered[currentLightboxIndex];
-                const img = document.getElementById('lightboxImage');
-                const info = document.getElementById('lightboxInfo');
-                
-                img.src = artwork.imageUrl || `https://picsum.photos/seed/${artwork.id}/800/600`;
-                info.innerHTML = `
-                    <strong>${artwork.title}</strong><br>
-                    by ${artwork.artist} • ${artwork.year}<br>
-                    ${artwork.medium} | ${artwork.style || 'N/A'}
-                `;
-            }
-        }
-
-        // ==================== ADMIN FUNCTIONS ====================
-        function toggleAdminPanel() {
-            isAdminMode = !isAdminMode;
-            document.getElementById('adminPanel').classList.add('active');
-            resetForm();
-            renderArtworks();
-            updateStats();
-        }
-
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').classList.remove('active');
-            isAdminMode = false;
-            renderArtworks();
-        }
-
-        function resetForm() {
-            document.getElementById('artworkForm').reset();
-            document.getElementById('artworkId').value = '';
-            document.getElementById('adminTitle').textContent = 'Add New Artwork';
-            document.getElementById('deleteBtn').style.display = 'none';
-        }
-
-        function editArtwork(id) {
-            const artwork = artworks.find(a => a.id === id);
-            if (!artwork) return;
-            
-            document.getElementById('artworkId').value = artwork.id;
-            document.getElementById('title').value = artwork.title;
-            document.getElementById('artist').value = artwork.artist;
-            document.getElementById('year').value = artwork.year;
-            document.getElementById('medium').value = artwork.medium;
-            document.getElementById('dimensions').value = artwork.dimensions || '';
-            document.getElementById('style').value = artwork.style || '';
-            document.getElementById('description').value = artwork.description || '';
-            document.getElementById('imageUrl').value = artwork.imageUrl || '';
-            
-            document.getElementById('adminTitle').textContent = 'Edit Artwork';
-            document.getElementById('deleteBtn').style.display = 'inline-block';
-            document.getElementById('adminPanel').classList.add('active');
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const id = document.getElementById('artworkId').value;
-            const artworkData = {
-                title: document.getElementById('title').value.trim(),
-                artist: document.getElementById('artist').value.trim(),
-                year: parseInt(document.getElementById('year').value),
-                medium: document.getElementById('medium').value.trim(),
-                dimensions: document.getElementById('dimensions').value.trim(),
-                style: document.getElementById('style').value,
-                description: document.getElementById('description').value.trim(),
-                imageUrl: document.getElementById('imageUrl').value.trim() || undefined
-            };
-            
-            if (id) {
-                // Update existing
-                const index = artworks.findIndex(a => a.id == id);
-                if (index !== -1) {
-                    artworks[index] = { ...artworks[index], ...artworkData };
-                    showToast('Artwork updated successfully', 'success');
-                }
-            } else {
-                // Add new
-                const newArtwork = {
-                    id: Date.now(),
-                    ...artworkData
-                };
-                artworks.push(newArtwork);
-                showToast('Artwork added successfully', 'success');
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(artwork => 
+                    artwork.medium.toLowerCase().includes(currentFilter)
+                );
             }
             
-            saveToStorage();
-            closeAdminPanel();
-            renderArtworks();
-            updateStats();
+            renderArtworks(filtered);
         }
 
-        function confirmDelete(id) {
-            if (confirm('Are you sure you want to delete this artwork? This action cannot be undone.')) {
-                deleteArtwork(id);
-            }
-        }
+        searchInput.addEventListener('input', filterArtworks);
 
-        function deleteCurrentArtwork() {
-            const id = document.getElementById('artworkId').value;
-            if (id) {
-                confirmDelete(parseInt(id));
-                closeAdminPanel();
-            }
-        }
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                filterArtworks();
+            });
+        });
 
-        function deleteArtwork(id) {
-            artworks = artworks.filter(a => a.id !== id);
-            saveToStorage();
-            renderArtworks();
-            updateStats();
-            showToast('Artwork deleted successfully', 'success');
-        }
-
-        // ==================== STATISTICS ====================
-        function updateStats() {
-            const totalCount = artworks.length;
-            const uniqueArtists = [...new Set(artworks.map(a => a.artist))].length;
-            const years = artworks.map(a => a.year).filter(y => y);
-            const totalYears = years.length > 1 ? (Math.max(...years) - Math.min(...years) + 1) : (years.length || 0);
-            
-            document.getElementById('totalCount').textContent = totalCount;
-            document.getElementById('uniqueArtists').textContent = uniqueArtists;
-            document.getElementById('totalYears').textContent = totalYears;
-            
-            // Stats modal
-            document.getElementById('statTotal').textContent = totalCount;
-            document.getElementById('statArtists').textContent = uniqueArtists;
-            document.getElementById('statPaintings').textContent = artworks.filter(a => a.medium.toLowerCase().includes('paint')).length;
-            document.getElementById('statDigital').textContent = artworks.filter(a => a.medium.toLowerCase().includes('digital') || a.style === 'Digital').length;
-        }
-
-        // ==================== TOAST NOTIFICATIONS ====================
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.getElementById('toastContainer').appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
-        // Expose stats button
-        window.showStats = function() {
-            document.getElementById('statsModal').classList.add('active');
-        };
+        // Initial render
+        renderArtworks(artworks);
     </script>
 </body>
 </html>

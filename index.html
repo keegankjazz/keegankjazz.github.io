@@ -18,9 +18,9 @@
             line-height: 1.6;
         }
 
-        /* Header Styles */
+        /* Header Styles - Brighter Blue */
         header {
-            background: linear-gradient(135deg, #6d4aff 0%, #4a3ab8 100%);
+            background: linear-gradient(135deg, #5b92ff 0%, #3a75e8 100%);
             color: white;
             padding: 2rem;
             text-align: center;
@@ -66,7 +66,7 @@
 
         .search-bar input:focus {
             outline: none;
-            border-color: #6d4aff;
+            border-color: #5b92ff;
         }
 
         .search-icon {
@@ -94,7 +94,7 @@
         }
 
         .filter-btn:hover, .filter-btn.active {
-            background-color: #6d4aff;
+            background-color: #5b92ff;
             color: white;
         }
 
@@ -115,7 +115,7 @@
         .stat-value {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #6d4aff;
+            color: #5b92ff;
         }
 
         .stat-label {
@@ -171,7 +171,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at center, rgba(109, 74, 255, 0) 0%, rgba(109, 74, 255, 0.3) 100%);
+            background: radial-gradient(circle at center, rgba(91, 146, 255, 0) 0%, rgba(91, 146, 255, 0.3) 100%);
             opacity: 0;
             transition: opacity 0.3s;
             display: flex;
@@ -221,12 +221,7 @@
         }
 
         .status-display {
-            background-color: #6d4aff;
-            color: white;
-        }
-
-        .status-nfs {
-            background-color: #6c757d;
+            background-color: #5b92ff;
             color: white;
         }
 
@@ -242,7 +237,7 @@
         }
 
         .artwork-artist {
-            color: #6d4aff;
+            color: #5b92ff;
             font-style: italic;
             margin-bottom: 0.5rem;
             font-weight: 500;
@@ -496,10 +491,6 @@
             <div class="stat-value" id="displayCount">0</div>
             <div class="stat-label">On Display</div>
         </div>
-        <div class="stat-item">
-            <div class="stat-value" id="nfsCount">0</div>
-            <div class="stat-label">NFS</div>
-        </div>
     </div>
 
     <div class="controls">
@@ -538,7 +529,7 @@
     <div id="toastContainer"></div>
 
     <footer>
-        <p>&copy; 2024 Keegan Kaiser Gallery. All rights reserved.</p>
+        <p>&copy; 2026 Keegan Kaiser Gallery. All rights reserved.</p>
         <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #aaa;">Click any artwork to view fullscreen</p>
     </footer>
 
@@ -596,14 +587,7 @@
             { id: 44, year: 2023, title: "Untitled (Zentangle)", dimensions: '10.5" x 12.75"', medium: "Permanent Marker on Paper", status: "in-stock" },
             { id: 45, year: 2019, title: "Veil", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
             { id: 46, year: 2019, title: "Point", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 47, year: 2019, title: "Untitled (Moon)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 48, year: 2018, title: "Untitled (Smile)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 49, year: 2018, title: "Untitled (Beard)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 50, year: 2018, title: "Untitled (Dog)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 51, year: 2018, title: "Untitled (Haze)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 52, year: 2018, title: "Untitled (Hug)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 53, year: 2018, title: "Untitled (Hot)", dimensions: '', medium: "Ink on Paper", status: "nfs" },
-            { id: 54, year: 2018, title: "Untitled (Cool)", dimensions: '', medium: "Ink on Paper", status: "nfs" }
+            { id: 47, year: 2019, title: "Untitled (Red)", dimensions: '5" x 7"', medium: "Acrylic on Canvas board", status: "in-stock" }
         ];
 
         // ==================== STATE MANAGEMENT ====================
@@ -748,14 +732,12 @@
             const statusColors = {
                 'in-stock': '#28a745',
                 'sold': '#dc3545',
-                'display': '#6d4aff',
-                'nfs': '#6c757d'
+                'display': '#5b92ff'
             };
             const statusLabels = {
                 'in-stock': 'In Stock',
                 'sold': 'Sold',
-                'display': 'On Display',
-                'nfs': 'Not For Sale'
+                'display': 'On Display'
             };
             
             info.innerHTML = `
@@ -792,14 +774,12 @@
                 const statusColors = {
                     'in-stock': '#28a745',
                     'sold': '#dc3545',
-                    'display': '#6d4aff',
-                    'nfs': '#6c757d'
+                    'display': '#5b92ff'
                 };
                 const statusLabels = {
                     'in-stock': 'In Stock',
                     'sold': 'Sold',
-                    'display': 'On Display',
-                    'nfs': 'Not For Sale'
+                    'display': 'On Display'
                 };
                 
                 info.innerHTML = `
@@ -817,13 +797,11 @@
             const inStockCount = artworks.filter(a => a.status === 'in-stock').length;
             const soldCount = artworks.filter(a => a.status === 'sold').length;
             const displayCount = artworks.filter(a => a.status === 'display').length;
-            const nfsCount = artworks.filter(a => a.status === 'nfs').length;
             
             document.getElementById('totalCount').textContent = totalCount;
             document.getElementById('inStockCount').textContent = inStockCount;
             document.getElementById('soldCount').textContent = soldCount;
             document.getElementById('displayCount').textContent = displayCount;
-            document.getElementById('nfsCount').textContent = nfsCount;
         }
 
         // ==================== TOAST NOTIFICATIONS ====================

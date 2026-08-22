@@ -1,1 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Collection Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #6d4aff;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #6d4aff;
+            color: white;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .artwork-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .artwork-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .artwork-details {
+            padding: 1rem;
+        }
+
+        .artwork-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .artwork-artist {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .artwork-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #333;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎨 Art Collection Gallery</h1>
+        <p>Browse and discover curated artworks</p>
+    </header>
+
+    <div class="controls">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search artworks, artists, or styles...">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="painting">Painting</button>
+            <button class="filter-btn" data-filter="sculpture">Sculpture</button>
+            <button class="filter-btn" data-filter="digital">Digital</button>
+            <button class="filter-btn" data-filter="photography">Photography</button>
+        </div>
+    </div>
+
+    <main class="gallery" id="artworkGallery">
+        <!-- Artwork cards will be inserted here -->
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Art Collection Gallery. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Sample artwork data - replace with your actual collection
+        const artworks = [
+            {
+                id: 1,
+                title: "Sunset Dreams",
+                artist: "Maria Chen",
+                year: 2023,
+                medium: "Oil on canvas",
+                dimensions: "24\" x 36\"",
+                style: "Impressionism",
+                image: "https://picsum.photos/seed/art1/400/300"
+            },
+            {
+                id: 2,
+                title: "Geometric Harmony",
+                artist: "Alex Rivera",
+                year: 2024,
+                medium: "Acrylic",
+                dimensions: "30\" x 40\"",
+                style: "Abstract",
+                image: "https://picsum.photos/seed/art2/400/300"
+            },
+            {
+                id: 3,
+                title: "Urban Solitude",
+                artist: "Jordan Kim",
+                year: 2023,
+                medium: "Mixed media",
+                dimensions: "18\" x 24\"",
+                style: "Contemporary",
+                image: "https://picsum.photos/seed/art3/400/300"
+            },
+            {
+                id: 4,
+                title: "Nature's Whisper",
+                artist: "Sam Patel",
+                year: 2022,
+                medium: "Watercolor",
+                dimensions: "20\" x 28\"",
+                style: "Realism",
+                image: "https://picsum.photos/seed/art4/400/300"
+            },
+            {
+                id: 5,
+                title: "Digital Dreamscape",
+                artist: "Taylor Brooks",
+                year: 2024,
+                medium: "Digital art",
+                dimensions: "4K resolution",
+                style: "Digital",
+                image: "https://picsum.photos/seed/art5/400/300"
+            },
+            {
+                id: 6,
+                title: "Marble Thoughts",
+                artist: "Casey Morgan",
+                year: 2021,
+                medium: "Stone sculpture",
+                dimensions: "48\" height",
+                style: "Classical",
+                image: "https://picsum.photos/seed/art6/400/300"
+            }
+        ];
+
+        const gallery = document.getElementById('artworkGallery');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        let currentFilter = 'all';
+
+        function renderArtworks(filteredList) {
+            gallery.innerHTML = filteredList.map(artwork => `
+                <article class="artwork-card">
+                    <img src="${artwork.image}" alt="${artwork.title}" class="artwork-image">
+                    <div class="artwork-details">
+                        <h3 class="artwork-title">${artwork.title}</h3>
+                        <p class="artwork-artist">by ${artwork.artist}</p>
+                        <div class="artwork-meta">
+                            <span>${artwork.medium}</span>
+                            <span>${artwork.year}</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">${artwork.style}</span>
+                            <span class="tag">${artwork.dimensions}</span>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterArtworks() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let filtered = artworks.filter(artwork => 
+                artwork.title.toLowerCase().includes(searchTerm) ||
+                artwork.artist.toLowerCase().includes(searchTerm) ||
+                artwork.style.toLowerCase().includes(searchTerm)
+            );
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(artwork => 
+                    artwork.medium.toLowerCase().includes(currentFilter)
+                );
+            }
+            
+            renderArtworks(filtered);
+        }
+
+        searchInput.addEventListener('input', filterArtworks);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                filterArtworks();
+            });
+        });
+
+        // Initial render
+        renderArtworks(artworks);
+    </script>
+</body>
+</html>

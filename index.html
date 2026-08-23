@@ -656,7 +656,7 @@
                 <article class="artwork-card" data-id="${artwork.id}">
                     <div class="status-badge ${statusClass}">${statusLabel}</div>
                     <div class="artwork-image-container" onclick="openLightbox(${index})">
-                        <img src="https://picsum.photos/seed/kaiser${hash}/800/600" 
+                        <img src="${artwork.image || 'fallback-image.jpg'}" alt="${artwork.title}" 
                              alt="${artwork.title}" 
                              class="artwork-image"
                              loading="lazy">

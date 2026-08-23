@@ -37,6 +37,24 @@
             font-size: 1.1rem;
         }
 
+        .contact-info {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .contact-info a {
+            font-style: italic;
+            text-decoration: underline;
+            color: #ffd700;  /* Gold/yellow color for contrast */
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            opacity: 0.85;
+            text-decoration: none;
+        }
+
         /* Controls Section */
         .controls {
             display: flex;
@@ -327,11 +345,22 @@
             opacity: 0.9;
         }
 
+        .lightbox-price {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #28a745;
+        }
+
         .lightbox-status {
             display: inline-block;
             padding: 0.5rem 1rem;
             border-radius: 6px;
             margin-top: 0.5rem;
+            margin-left: 0.5rem;
             font-weight: 600;
             font-size: 0.9rem;
         }
@@ -473,6 +502,10 @@
     <header>
         <h1>🎨 Keegan Kaiser - Gallery</h1>
         <p class="artist-banner">Original Art Collection</p>
+        <p class="contact-info">
+            For inquiry/purchase, please contact me directly at 
+            <a href="mailto:keegankjazz@proton.me">keegankjazz@proton.me</a>
+        </p>
     </header>
 
     <div class="stats-bar">
@@ -537,58 +570,59 @@
     <script>
         // ==================== CONFIGURATION ====================
         const COLLECTION_CONFIG = {
-            artistName: "Keegan Kaiser"
+            artistName: "Keegan Kaiser",
+            defaultPrice: 100
         };
 
         // ==================== ARTWORK DATA FROM FILE ====================
         const artworks = [
-            { id: 1, year: 2026, title: "Untitled (Graffiti)", dimensions: '20" x 20"', image: "art thumbnails/IMG_8969.JPEG", imageLarge: "art large/IMG_8969.JPEG", medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock" },
-            { id: 2, year: 2026, title: "asemic writing I", dimensions: '5" x 8"', image: "art thumbnails/IMG_8681.JPEG", imageLarge: "art large/IMG_8681.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 3, year: 2026, title: "ejection", dimensions: '5" x 8"', image: "art thumbnails/IMG_8684.JPEG", imageLarge: "art large/IMG_8684.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 4, year: 2026, title: "Graphic Score I", dimensions: '8.5" x 11"', image: "art thumbnails/IMG_8552.JPEG", imageLarge: "art large/IMG_8552.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 5, year: 2026, title: "abstract", dimensions: '5" x 8"', image: "art thumbnails/IMG_8682.JPEG", imageLarge: "art large/IMG_8682.JPEG", medium: "Mixed Media on Paper", status: "in-stock" },
-            { id: 6, year: 2026, title: "Untitled (Yellow)", dimensions: '24" x 36"', image: "art thumbnails/IMG_8970.JPEG", imageLarge: "art large/IMG_8970.JPEG", medium: "Oil on Canvas", status: "in-stock" },
-            { id: 7, year: 2026, title: "Untitled (Blue)", dimensions: '20" x 20"', image: "art thumbnails/IMG_8972.JPEG", imageLarge: "art large/IMG_8972.JPEG", medium: "Oil on Canvas", status: "in-stock" },
-            { id: 8, year: 2026, title: "Earth", dimensions: '18" x 24"', image: "art thumbnails/IMG_8971.JPEG", imageLarge: "art large/IMG_8971.JPEG", medium: "Oil on Canvas", status: "in-stock" },
-            { id: 9, year: 2026, title: "Untitled (?/...)", dimensions: '30" x 40"', image: "art thumbnails/IMG_8468.JPEG", imageLarge: "art large/IMG_8468.JPEG", medium: "Oil on Canvas", status: "sold" },
-            { id: 10, year: 2026, title: "Untitled (Tower)", dimensions: '12" x 16"', image: "art thumbnails/IMG_8973.JPEG", imageLarge: "art large/IMG_8973.JPEG", medium: "Oil on Canvas Board", status: "in-stock" },
-            { id: 11, year: 2026, title: "puzzle piece", dimensions: '5" x 8"', image: "art thumbnails/IMG_8683.JPEG", imageLarge: "art large/IMG_8683.JPEG", medium: "Pencil on Paper", status: "in-stock" },
-            { id: 12, year: 2025, title: "Untitled (Aether)", dimensions: '48" x 48"', image: "art thumbnails/IMG_6276.JPEG", imageLarge: "art large/IMG_6276.JPEG", medium: "Oil on Canvas", status: "in-stock" },
-            { id: 13, year: 2024, title: "Untitled (Dancer)", dimensions: '20" x 20"', image: "art thumbnails/IMG_6169.JPEG", imageLarge: "art large/IMG_6169.JPEG", medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock" },
-            { id: 14, year: 2024, title: "Untitled (KU)", dimensions: '8" x 10"', image: "art thumbnails/IMG_4413.JPEG", imageLarge: "art large/IMG_4413.JPEG", medium: "Acrylic on Canvas", status: "in-stock" },
-            { id: 15, year: 2024, title: "Rio", dimensions: '8" x 8"', image: "art thumbnails/IMG_4420.JPEG", imageLarge: "art large/IMG_4420.JPEG", medium: "Acrylic on Canvas", status: "in-stock" },
-            { id: 16, year: 2024, title: "water with boats", dimensions: '20" x 20"', image: "art thumbnails/IMG_4489.JPEG", imageLarge: "art large/IMG_4489.JPEG", medium: "Acrylic on Canvas", status: "in-stock" },
-            { id: 17, year: 2024, title: "Glacé", dimensions: '48" x 48"', image: "art thumbnails/IMG_5677.JPEG", imageLarge: "art large/IMG_5677.JPEG", medium: "Acrylic on Canvas", status: "in-stock" },
-            { id: 18, year: 2024, title: "Orbit", dimensions: '48" x 48"', image: "art thumbnails/IMG_5668.JPEG", imageLarge: "art large/IMG_5668.JPEG", medium: "Acrylic on Canvas", status: "display" },
-            { id: 19, year: 2024, title: "Halcyon", dimensions: '8" x 8"', image: "art thumbnails/IMG_4374.JPEG", imageLarge: "art large/IMG_4374.JPEG", medium: "Acrylic on Canvas", status: "sold" },
-            { id: 20, year: 2024, title: "Fervency", dimensions: '6" x 6"', image: "art thumbnails/IMG_4389.JPEG", imageLarge: "art large/IMG_4389.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 21, year: 2024, title: "Escape", dimensions: '5" x 7"', image: "art thumbnails/IMG_4674.JPEG", imageLarge: "art large/IMG_4674.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 22, year: 2024, title: "Untitled (Horizon)", dimensions: '9" x 11"', image: "art thumbnails/IMG_5473.JPEG", imageLarge: "art large/IMG_5473.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 23, year: 2024, title: "Garden", dimensions: '', image: "art thumbnails/IMG_5562.JPEG", imageLarge: "art large/IMG_5562.JPEG", medium: "Digital Photography", status: "in-stock" },
-            { id: 24, year: 2024, title: "Go Forth", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4379.JPEG", imageLarge: "art large/IMG_4379.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 25, year: 2024, title: "Untitled (Tree)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4381.JPEG", imageLarge: "art large/IMG_4381.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 26, year: 2024, title: "Untitled (Admiral)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4378.JPEG", imageLarge: "art large/IMG_4378.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 27, year: 2024, title: "Renewal//Mars", dimensions: '20" x 20"', image: "art thumbnails/IMG_6178.JPEG", imageLarge: "art large/IMG_6178.PNG", medium: "Oil on Canvas", status: "in-stock" },
-            { id: 28, year: 2023, title: "Drift", dimensions: '11" x 14"', image: "art thumbnails/IMG_4021.JPEG", imageLarge: "art large/IMG_4021.JPEG", medium: "Acrylic on Canvas", status: "in-stock" },
-            { id: 29, year: 2023, title: "Choices", dimensions: '8" x 10"', image: "art thumbnails/IMG_4344.JPEG", imageLarge: "art large/IMG_4344.JPEG", medium: "Acrylic on Canvas", status: "in-stock" },
-            { id: 30, year: 2023, title: "Keen", dimensions: '11" x 14"', image: "art thumbnails/IMG_4014.JPEG", imageLarge: "art large/IMG_4014.JPEG", medium: "Acrylic on Canvas", status: "sold" },
-            { id: 31, year: 2023, title: "Lark", dimensions: '6" x 6"', image: "art thumbnails/IMG_3881.JPEG", imageLarge: "art large/IMG_3881.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 32, year: 2023, title: "Baggage", dimensions: '5" x 7"', image: "art thumbnails/IMG_4018.JPEG", imageLarge: "art large/IMG_4018.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 33, year: 2023, title: "Explore", dimensions: '5" x 7"', image: "art thumbnails/IMG_4674.JPEG", imageLarge: "art large/IMG_4674.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 34, year: 2023, title: "Untitled (Forest)", dimensions: '8" x 8"', image: "art thumbnails/DSC_0089.JPEG", imageLarge: "art large/DSC_0089.JPEG", medium: "Acrylic on Canvas", status: "sold" },
-            { id: 35, year: 2023, title: "Structure", dimensions: '6" x 6"', image: "art thumbnails/IMG_4327.JPEG", imageLarge: "art large/IMG_4327.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 36, year: 2023, title: "Depart", dimensions: '', image: "art thumbnails/IMG_4115.JPEG", imageLarge: "art large/IMG_4115.JPEG", medium: "Digital Photography", status: "in-stock" },
-            { id: 37, year: 2023, title: "Untitled (Worm)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4311.JPEG", imageLarge: "art large/IMG_4311.JPEG", medium: "Ink on Paper", status: "sold" },
-            { id: 38, year: 2023, title: "Untitled (Bite)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4280.JPEG", imageLarge: "art large/IMG_4280.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 39, year: 2023, title: "Untitled (People)", dimensions: '3" x 3"', image: "art thumbnails/IMG_4281.JPEG", imageLarge: "art large/IMG_4281.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 40, year: 2023, title: "Untitled (Vice)", dimensions: '5" x 5"', image: "art thumbnails/IMG_4279.JPEG", imageLarge: "art large/IMG_4279.JPEG", medium: "Ink on Paper", status: "in-stock" },
-            { id: 41, year: 2023, title: "Why? who cares?", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4337.JPEG", imageLarge: "art large/IMG_4337.JPEG", medium: "Permanent Marker on Paper", status: "in-stock" },
-            { id: 42, year: 2023, title: "Never Ending", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4335.JPEG", imageLarge: "art large/IMG_4335.JPEG", medium: "Permanent Marker on Paper", status: "sold" },
-            { id: 43, year: 2023, title: "Could It Be?", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4334.JPEG", imageLarge: "art large/IMG_4334.JPEG", medium: "Permanent Marker on Paper", status: "in-stock" },
-            { id: 44, year: 2023, title: "Untitled (Zentangle)", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4333.JPEG", imageLarge: "art large/IMG_4333.JPEG", medium: "Permanent Marker on Paper", status: "in-stock" },
-            { id: 45, year: 2019, title: "Veil", dimensions: '5" x 7"', image: "art thumbnails/IMG_3887.JPEG", imageLarge: "art large/IMG_3887.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 46, year: 2019, title: "Point", dimensions: '5" x 7"', image: "art thumbnails/IMG_3889.JPEG", imageLarge: "art large/IMG_3889.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" },
-            { id: 47, year: 2019, title: "Untitled (Red)", dimensions: '5" x 7"', image: "art thumbnails/IMG_3888.JPEG", imageLarge: "art large/IMG_3888.JPEG", medium: "Acrylic on Canvas board", status: "in-stock" }
+            { id: 1, year: 2026, title: "Untitled (Graffiti)", dimensions: '20" x 20"', image: "art thumbnails/IMG_8969.JPEG", imageLarge: "art large/IMG_8969.JPEG", medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock", price: 100 },
+            { id: 2, year: 2026, title: "asemic writing I", dimensions: '5" x 8"', image: "art thumbnails/IMG_8681.JPEG", imageLarge: "art large/IMG_8681.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 3, year: 2026, title: "ejection", dimensions: '5" x 8"', image: "art thumbnails/IMG_8684.JPEG", imageLarge: "art large/IMG_8684.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 4, year: 2026, title: "Graphic Score I", dimensions: '8.5" x 11"', image: "art thumbnails/IMG_8552.JPEG", imageLarge: "art large/IMG_8552.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 5, year: 2026, title: "abstract", dimensions: '5" x 8"', image: "art thumbnails/IMG_8682.JPEG", imageLarge: "art large/IMG_8682.JPEG", medium: "Mixed Media on Paper", status: "in-stock", price: 100 },
+            { id: 6, year: 2026, title: "Untitled (Yellow)", dimensions: '24" x 36"', image: "art thumbnails/IMG_8970.JPEG", imageLarge: "art large/IMG_8970.JPEG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
+            { id: 7, year: 2026, title: "Untitled (Blue)", dimensions: '20" x 20"', image: "art thumbnails/IMG_8972.JPEG", imageLarge: "art large/IMG_8972.JPEG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
+            { id: 8, year: 2026, title: "Earth", dimensions: '18" x 24"', image: "art thumbnails/IMG_8971.JPEG", imageLarge: "art large/IMG_8971.JPEG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
+            { id: 9, year: 2026, title: "Untitled (?/...)", dimensions: '30" x 40"', image: "art thumbnails/IMG_8468.JPEG", imageLarge: "art large/IMG_8468.JPEG", medium: "Oil on Canvas", status: "sold", price: 100 },
+            { id: 10, year: 2026, title: "Untitled (Tower)", dimensions: '12" x 16"', image: "art thumbnails/IMG_8973.JPEG", imageLarge: "art large/IMG_8973.JPEG", medium: "Oil on Canvas Board", status: "in-stock", price: 100 },
+            { id: 11, year: 2026, title: "puzzle piece", dimensions: '5" x 8"', image: "art thumbnails/IMG_8683.JPEG", imageLarge: "art large/IMG_8683.JPEG", medium: "Pencil on Paper", status: "in-stock", price: 100 },
+            { id: 12, year: 2025, title: "Untitled (Aether)", dimensions: '48" x 48"', image: "art thumbnails/IMG_6276.JPEG", imageLarge: "art large/IMG_6276.JPEG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
+            { id: 13, year: 2024, title: "Untitled (Dancer)", dimensions: '20" x 20"', image: "art thumbnails/IMG_6169.JPEG", imageLarge: "art large/IMG_6169.JPEG", medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock", price: 100 },
+            { id: 14, year: 2024, title: "Untitled (KU)", dimensions: '8" x 10"', image: "art thumbnails/IMG_4413.JPEG", imageLarge: "art large/IMG_4413.JPEG", medium: "Acrylic on Canvas", status: "in-stock", price: 100 },
+            { id: 15, year: 2024, title: "Rio", dimensions: '8" x 8"', image: "art thumbnails/IMG_4420.JPEG", imageLarge: "art large/IMG_4420.JPEG", medium: "Acrylic on Canvas", status: "in-stock", price: 100 },
+            { id: 16, year: 2024, title: "water with boats", dimensions: '20" x 20"', image: "art thumbnails/IMG_4489.JPEG", imageLarge: "art large/IMG_4489.JPEG", medium: "Acrylic on Canvas", status: "in-stock", price: 100 },
+            { id: 17, year: 2024, title: "Glacé", dimensions: '48" x 48"', image: "art thumbnails/IMG_5677.JPEG", imageLarge: "art large/IMG_5677.JPEG", medium: "Acrylic on Canvas", status: "in-stock", price: 100 },
+            { id: 18, year: 2024, title: "Orbit", dimensions: '48" x 48"', image: "art thumbnails/IMG_5668.JPEG", imageLarge: "art large/IMG_5668.JPEG", medium: "Acrylic on Canvas", status: "display", price: 100 },
+            { id: 19, year: 2024, title: "Halcyon", dimensions: '8" x 8"', image: "art thumbnails/IMG_4374.JPEG", imageLarge: "art large/IMG_4374.JPEG", medium: "Acrylic on Canvas", status: "sold", price: 100 },
+            { id: 20, year: 2024, title: "Fervency", dimensions: '6" x 6"', image: "art thumbnails/IMG_4389.JPEG", imageLarge: "art large/IMG_4389.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 21, year: 2024, title: "Escape", dimensions: '5" x 7"', image: "art thumbnails/IMG_4674.JPEG", imageLarge: "art large/IMG_4674.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 22, year: 2024, title: "Untitled (Horizon)", dimensions: '9" x 11"', image: "art thumbnails/IMG_5473.JPEG", imageLarge: "art large/IMG_5473.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 23, year: 2024, title: "Garden", dimensions: '', image: "art thumbnails/IMG_5562.JPEG", imageLarge: "art large/IMG_5562.JPEG", medium: "Digital Photography", status: "in-stock", price: 100 },
+            { id: 24, year: 2024, title: "Go Forth", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4379.JPEG", imageLarge: "art large/IMG_4379.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 25, year: 2024, title: "Untitled (Tree)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4381.JPEG", imageLarge: "art large/IMG_4381.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 26, year: 2024, title: "Untitled (Admiral)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4378.JPEG", imageLarge: "art large/IMG_4378.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 27, year: 2024, title: "Renewal//Mars", dimensions: '20" x 20"', image: "art thumbnails/IMG_6178.JPEG", imageLarge: "art large/IMG_6178.PNG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
+            { id: 28, year: 2023, title: "Drift", dimensions: '11" x 14"', image: "art thumbnails/IMG_4021.JPEG", imageLarge: "art large/IMG_4021.JPEG", medium: "Acrylic on Canvas", status: "in-stock", price: 100 },
+            { id: 29, year: 2023, title: "Choices", dimensions: '8" x 10"', image: "art thumbnails/IMG_4344.JPEG", imageLarge: "art large/IMG_4344.JPEG", medium: "Acrylic on Canvas", status: "in-stock", price: 100 },
+            { id: 30, year: 2023, title: "Keen", dimensions: '11" x 14"', image: "art thumbnails/IMG_4014.JPEG", imageLarge: "art large/IMG_4014.JPEG", medium: "Acrylic on Canvas", status: "sold", price: 100 },
+            { id: 31, year: 2023, title: "Lark", dimensions: '6" x 6"', image: "art thumbnails/IMG_3881.JPEG", imageLarge: "art large/IMG_3881.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 32, year: 2023, title: "Baggage", dimensions: '5" x 7"', image: "art thumbnails/IMG_4018.JPEG", imageLarge: "art large/IMG_4018.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 33, year: 2023, title: "Explore", dimensions: '5" x 7"', image: "art thumbnails/IMG_4674.JPEG", imageLarge: "art large/IMG_4674.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 34, year: 2023, title: "Untitled (Forest)", dimensions: '8" x 8"', image: "art thumbnails/DSC_0089.JPEG", imageLarge: "art large/DSC_0089.JPEG", medium: "Acrylic on Canvas", status: "sold", price: 100 },
+            { id: 35, year: 2023, title: "Structure", dimensions: '6" x 6"', image: "art thumbnails/IMG_4327.JPEG", imageLarge: "art large/IMG_4327.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 36, year: 2023, title: "Depart", dimensions: '', image: "art thumbnails/IMG_4115.JPEG", imageLarge: "art large/IMG_4115.JPEG", medium: "Digital Photography", status: "in-stock", price: 100 },
+            { id: 37, year: 2023, title: "Untitled (Worm)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4311.JPEG", imageLarge: "art large/IMG_4311.JPEG", medium: "Ink on Paper", status: "sold", price: 100 },
+            { id: 38, year: 2023, title: "Untitled (Bite)", dimensions: '8.125" x 11.425"', image: "art thumbnails/IMG_4280.JPEG", imageLarge: "art large/IMG_4280.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 39, year: 2023, title: "Untitled (People)", dimensions: '3" x 3"', image: "art thumbnails/IMG_4281.JPEG", imageLarge: "art large/IMG_4281.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 40, year: 2023, title: "Untitled (Vice)", dimensions: '5" x 5"', image: "art thumbnails/IMG_4279.JPEG", imageLarge: "art large/IMG_4279.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 41, year: 2023, title: "Why? who cares?", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4337.JPEG", imageLarge: "art large/IMG_4337.JPEG", medium: "Permanent Marker on Paper", status: "in-stock", price: 100 },
+            { id: 42, year: 2023, title: "Never Ending", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4335.JPEG", imageLarge: "art large/IMG_4335.JPEG", medium: "Permanent Marker on Paper", status: "sold", price: 100 },
+            { id: 43, year: 2023, title: "Could It Be?", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4334.JPEG", imageLarge: "art large/IMG_4334.JPEG", medium: "Permanent Marker on Paper", status: "in-stock", price: 100 },
+            { id: 44, year: 2023, title: "Untitled (Zentangle)", dimensions: '10.5" x 12.75"', image: "art thumbnails/IMG_4333.JPEG", imageLarge: "art large/IMG_4333.JPEG", medium: "Permanent Marker on Paper", status: "in-stock", price: 100 },
+            { id: 45, year: 2019, title: "Veil", dimensions: '5" x 7"', image: "art thumbnails/IMG_3887.JPEG", imageLarge: "art large/IMG_3887.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 46, year: 2019, title: "Point", dimensions: '5" x 7"', image: "art thumbnails/IMG_3889.JPEG", imageLarge: "art large/IMG_3889.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 },
+            { id: 47, year: 2019, title: "Untitled (Red)", dimensions: '5" x 7"', image: "art thumbnails/IMG_3888.JPEG", imageLarge: "art large/IMG_3888.JPEG", medium: "Acrylic on Canvas board", status: "in-stock", price: 100 }
         ];
 
         // ==================== STATE MANAGEMENT ====================
@@ -744,7 +778,10 @@
                 <h3>${artwork.title}</h3>
                 <p><strong>${COLLECTION_CONFIG.artistName}</strong> • ${artwork.year}</p>
                 <p>${artwork.medium}${artwork.dimensions ? ` | ${artwork.dimensions}` : ''}</p>
-                <span class="lightbox-status" style="background-color: ${statusColors[artwork.status]}">${statusLabels[artwork.status]}</span>
+                <div>
+                    <span class="lightbox-price">$${artwork.price?.toLocaleString() ?? COLLECTION_CONFIG.defaultPrice.toLocaleString()}</span>
+                    <span class="lightbox-status" style="background-color: ${statusColors[artwork.status]}">${statusLabels[artwork.status]}</span>
+                </div>
             `;
             
             currentLightboxIndex = index;
@@ -785,7 +822,10 @@
                     <h3>${artwork.title}</h3>
                     <p><strong>${COLLECTION_CONFIG.artistName}</strong> • ${artwork.year}</p>
                     <p>${artwork.medium}${artwork.dimensions ? ` | ${artwork.dimensions}` : ''}</p>
-                    <span class="lightbox-status" style="background-color: ${statusColors[artwork.status]}">${statusLabels[artwork.status]}</span>
+                    <div>
+                        <span class="lightbox-price">$${artwork.price?.toLocaleString() ?? COLLECTION_CONFIG.defaultPrice.toLocaleString()}</span>
+                        <span class="lightbox-status" style="background-color: ${statusColors[artwork.status]}">${statusLabels[artwork.status]}</span>
+                    </div>
                 `;
             }
         }

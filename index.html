@@ -46,7 +46,7 @@
         .contact-info a {
             font-style: italic;
             text-decoration: underline;
-            color: #ffd700;  /* Gold/yellow color for contrast */
+            color: #ffd700;
             font-weight: 500;
         }
 
@@ -240,6 +240,11 @@
 
         .status-display {
             background-color: #5b92ff;
+            color: white;
+        }
+
+        .status-nfs {
+            background-color: #6c757d;
             color: white;
         }
 
@@ -579,7 +584,7 @@
             { id: 1, year: 2026, title: "Untitled (Graffiti)", dimensions: '20" x 20"', image: "art thumbnails/IMG_8969.JPEG", imageLarge: "art large/IMG_8969.JPEG", medium: "Acrylic and Permanent Marker on Canvas", status: "in-stock", price: 100 },
             { id: 2, year: 2026, title: "asemic writing I", dimensions: '5" x 8"', image: "art thumbnails/IMG_8681.JPEG", imageLarge: "art large/IMG_8681.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
             { id: 3, year: 2026, title: "ejection", dimensions: '5" x 8"', image: "art thumbnails/IMG_8684.JPEG", imageLarge: "art large/IMG_8684.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
-            { id: 4, year: 2026, title: "Graphic Score I", dimensions: '8.5" x 11"', image: "art thumbnails/IMG_8552.JPEG", imageLarge: "art large/IMG_8552.JPEG", medium: "Ink on Paper", status: "in-stock", price: 100 },
+            { id: 4, year: 2026, title: "Graphic Score I", dimensions: '8.5" x 11"', image: "art thumbnails/IMG_8552.JPEG", imageLarge: "art large/IMG_8552.JPEG", medium: "Ink on Paper", status: "nfs", price: 100 },
             { id: 5, year: 2026, title: "abstract", dimensions: '5" x 8"', image: "art thumbnails/IMG_8682.JPEG", imageLarge: "art large/IMG_8682.JPEG", medium: "Mixed Media on Paper", status: "in-stock", price: 100 },
             { id: 6, year: 2026, title: "Untitled (Yellow)", dimensions: '24" x 36"', image: "art thumbnails/IMG_8970.JPEG", imageLarge: "art large/IMG_8970.JPEG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
             { id: 7, year: 2026, title: "Untitled (Blue)", dimensions: '20" x 20"', image: "art thumbnails/IMG_8972.JPEG", imageLarge: "art large/IMG_8972.JPEG", medium: "Oil on Canvas", status: "in-stock", price: 100 },
@@ -683,7 +688,7 @@
             
             gallery.innerHTML = list.map((artwork, index) => {
                 const statusClass = `status-${artwork.status}`;
-                const statusLabel = artwork.status === 'in-stock' ? 'In Stock' : artwork.status === 'sold' ? 'Sold' : artwork.status === 'display' ? 'On Display' : 'NFS';
+                const statusLabel = artwork.status === 'in-stock' ? 'In Stock' : artwork.status === 'sold' ? 'Sold' : artwork.status === 'display' ? 'On Display' : artwork.status === 'nfs' ? 'NFS' : 'NFS';
                 const hash = artwork.id.toString().padStart(3, '0');
                 
                 return `
@@ -766,12 +771,14 @@
             const statusColors = {
                 'in-stock': '#28a745',
                 'sold': '#dc3545',
-                'display': '#5b92ff'
+                'display': '#5b92ff',
+                'nfs': '#6c757d'
             };
             const statusLabels = {
                 'in-stock': 'In Stock',
                 'sold': 'Sold',
-                'display': 'On Display'
+                'display': 'On Display',
+                'nfs': 'NFS'
             };
             
             info.innerHTML = `
@@ -810,12 +817,14 @@
                 const statusColors = {
                     'in-stock': '#28a745',
                     'sold': '#dc3545',
-                    'display': '#5b92ff'
+                    'display': '#5b92ff',
+                    'nfs': '#6c757d'
                 };
                 const statusLabels = {
                     'in-stock': 'In Stock',
                     'sold': 'Sold',
-                    'display': 'On Display'
+                    'display': 'On Display',
+                    'nfs': 'NFS'
                 };
                 
                 info.innerHTML = `
